@@ -19,6 +19,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.H2Dialect;
 import org.hibernate.dialect.MariaDBDialect;
 import org.hibernate.dialect.MySQLDialect;
@@ -50,7 +51,7 @@ public class LocalDateTimeTest extends AbstractJavaTimeTypeTest<LocalDateTime, L
 				.add( 2017, 11, 6, 19, 19, 1, 500, ZONE_PARIS )
 				.skippedForDialects(
 						// MySQL/Mariadb cannot store values equal to epoch exactly, or less, in a timestamp.
-						Arrays.asList( MySQLDialect.class, MariaDBDialect.class ),
+						Arrays.asList( MySQLDialect.class, MariaDBDialect.class, SingleStoreDialect.class ),
 						b -> b
 								.add( 1970, 1, 1, 0, 0, 0, 0, ZONE_GMT )
 								.add( 1900, 1, 1, 0, 0, 0, 0, ZONE_GMT )
@@ -62,7 +63,7 @@ public class LocalDateTimeTest extends AbstractJavaTimeTypeTest<LocalDateTime, L
 				)
 				.skippedForDialects(
 						// MySQL/Mariadb cannot store values equal to epoch exactly, or less, in a timestamp.
-						dialect -> dialect instanceof MySQLDialect || dialect instanceof MariaDBDialect
+						dialect -> dialect instanceof MySQLDialect || dialect instanceof MariaDBDialect || dialect instanceof SingleStoreDialect
 								|| dialect instanceof H2Dialect && ( (H2Dialect) dialect ).hasOddDstBehavior(),
 						b -> b
 								// Affected by HHH-13266 (JDK-8061577)
@@ -71,7 +72,7 @@ public class LocalDateTimeTest extends AbstractJavaTimeTypeTest<LocalDateTime, L
 				.skippedForDialects(
 						// MySQL/Mariadb/Sybase cannot store dates in 1600 in a timestamp.
 						dialect -> dialect instanceof MySQLDialect || dialect instanceof MariaDBDialect || dialect instanceof SybaseDialect
-								|| dialect instanceof H2Dialect && ( (H2Dialect) dialect ).hasOddDstBehavior(),
+								|| dialect instanceof SingleStoreDialect || dialect instanceof H2Dialect && ( (H2Dialect) dialect ).hasOddDstBehavior(),
 						b -> b
 								.add( 1600, 1, 1, 0, 0, 0, 0, ZONE_AMSTERDAM )
 				)

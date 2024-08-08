@@ -21,8 +21,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.StaleStateException;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.OracleDialect;
+import org.hibernate.orm.test.schema.UniqueConstraintTest;
 import org.hibernate.query.Query;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
@@ -197,6 +199,7 @@ public class EntityTest {
 		);
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class)
 	@Test
 	public void testUniqueConstraint(SessionFactoryScope scope) {
 		int id = 5;

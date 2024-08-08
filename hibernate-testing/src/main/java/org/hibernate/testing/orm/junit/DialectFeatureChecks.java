@@ -10,6 +10,7 @@ import java.sql.Types;
 
 import org.hibernate.boot.model.TruthValue;
 import org.hibernate.community.dialect.FirebirdDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.AbstractHANADialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DB2Dialect;
@@ -186,13 +187,13 @@ abstract public class DialectFeatureChecks {
 			return dialect.supportsExistsInSelect();
 		}
 	}
-	
+
 	public static class SupportsLobValueChangePropogation implements DialectFeatureCheck {
 		public boolean apply(Dialect dialect) {
 			return dialect.supportsLobValueChangePropagation();
 		}
 	}
-	
+
 	public static class SupportsLockTimeouts implements DialectFeatureCheck {
 		public boolean apply(Dialect dialect) {
 			return dialect.supportsLockTimeouts();
@@ -263,7 +264,7 @@ abstract public class DialectFeatureChecks {
 					|| dialect instanceof PostgreSQLDialect
 					|| dialect instanceof SQLServerDialect
 					|| dialect instanceof DerbyDialect
-					|| dialect instanceof MySQLDialect && !(dialect instanceof TiDBDialect)
+					|| dialect instanceof MySQLDialect && !( dialect instanceof TiDBDialect )
 					|| dialect instanceof MariaDBDialect;
 		}
 	}
@@ -322,8 +323,8 @@ abstract public class DialectFeatureChecks {
 	public static class SupportsRepeat implements DialectFeatureCheck {
 		public boolean apply(Dialect dialect) {
 			dialect = DialectDelegateWrapper.extractRealDialect( dialect );
-			// Derby doesn't support the `REPLACE` function
-			return !( dialect instanceof DerbyDialect );
+			// Derby doesn't support the `REPEAT` function
+			return !( dialect instanceof DerbyDialect || dialect instanceof SingleStoreDialect );
 		}
 	}
 
@@ -374,7 +375,8 @@ abstract public class DialectFeatureChecks {
 			dialect = DialectDelegateWrapper.extractRealDialect( dialect );
 			return dialect.supportsOrderByInSubquery()
 					// For some reason, HANA doesn't support order by in correlated subqueries...
-					&& !( dialect instanceof AbstractHANADialect );
+					&& !( dialect instanceof AbstractHANADialect
+					|| dialect instanceof SingleStoreDialect );
 		}
 	}
 
@@ -466,7 +468,8 @@ abstract public class DialectFeatureChecks {
 		public boolean apply(Dialect dialect) {
 			dialect = DialectDelegateWrapper.extractRealDialect( dialect );
 			// TiDB db does not support subqueries for ON condition
-			return !( dialect instanceof TiDBDialect );
+			return !( dialect instanceof TiDBDialect
+					|| dialect instanceof SingleStoreDialect );
 		}
 	}
 
@@ -475,6 +478,7 @@ abstract public class DialectFeatureChecks {
 			dialect = DialectDelegateWrapper.extractRealDialect( dialect );
 			// TiDB db does not support subqueries for ON condition
 			return !( dialect instanceof H2Dialect
+					|| dialect instanceof SingleStoreDialect
 					|| dialect instanceof MySQLDialect
 					|| dialect instanceof SybaseDialect
 					|| dialect instanceof DerbyDialect );
@@ -503,14 +507,14 @@ abstract public class DialectFeatureChecks {
 		public boolean apply(Dialect dialect) {
 			dialect = DialectDelegateWrapper.extractRealDialect( dialect );
 			return dialect instanceof MySQLDialect
-				|| dialect instanceof H2Dialect
-				|| dialect instanceof SQLServerDialect
-				|| dialect instanceof PostgreSQLDialect
-				|| dialect instanceof DB2Dialect
-				|| dialect instanceof OracleDialect
-				|| dialect instanceof SybaseDialect
-				|| dialect instanceof DerbyDialect
-				|| dialect instanceof HSQLDialect;
+					|| dialect instanceof H2Dialect
+					|| dialect instanceof SQLServerDialect
+					|| dialect instanceof PostgreSQLDialect
+					|| dialect instanceof DB2Dialect
+					|| dialect instanceof OracleDialect
+					|| dialect instanceof SybaseDialect
+					|| dialect instanceof DerbyDialect
+					|| dialect instanceof HSQLDialect;
 		}
 	}
 
@@ -523,7 +527,7 @@ abstract public class DialectFeatureChecks {
 						"",
 						"",
 						"",
-						new AggregateColumn(new Column(), null) {
+						new AggregateColumn( new Column(), null ) {
 							@Override
 							public TruthValue getNullable() {
 								return TruthValue.UNKNOWN;
@@ -591,7 +595,7 @@ abstract public class DialectFeatureChecks {
 						"",
 						"",
 						"",
-						new AggregateColumn(new Column(), null) {
+						new AggregateColumn( new Column(), null ) {
 							@Override
 							public TruthValue getNullable() {
 								return TruthValue.UNKNOWN;
@@ -644,7 +648,7 @@ abstract public class DialectFeatureChecks {
 						}
 				) != null;
 			}
-				catch (Exception e) {
+			catch (Exception e) {
 				return false;
 			}
 		}

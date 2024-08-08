@@ -21,6 +21,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.mapping.Collection;
 import org.hibernate.mapping.Column;
 import org.hibernate.tool.schema.internal.SchemaCreatorImpl;
@@ -28,6 +29,7 @@ import org.hibernate.tool.schema.internal.exec.GenerationTargetToStdout;
 
 
 import org.hibernate.testing.orm.junit.DomainModel;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 
 import org.junit.jupiter.api.AfterEach;
@@ -62,6 +64,7 @@ public class ListMappingTest  {
 		}
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore could have rowstore/columnstore syntax")
 	@Test
 	public void testOrderColumnInNormalBiDirectonalModel() {
 		Metadata metadata = new MetadataSources( ssr )

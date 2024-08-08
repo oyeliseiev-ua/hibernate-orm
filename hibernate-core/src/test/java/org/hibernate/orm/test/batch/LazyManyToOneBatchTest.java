@@ -3,6 +3,7 @@ package org.hibernate.orm.test.batch;
 import java.util.List;
 
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.jdbc.SQLStatementInspector;
@@ -11,6 +12,7 @@ import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +67,7 @@ public class LazyManyToOneBatchTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testSelect(SessionFactoryScope scope) {
 		SQLStatementInspector statementInspector = scope.getCollectingStatementInspector();

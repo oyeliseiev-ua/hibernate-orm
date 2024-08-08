@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 
 import org.hibernate.testing.jdbc.SQLStatementInspector;
@@ -19,6 +20,7 @@ import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,6 +69,7 @@ public class EagerManyToOneTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testGetResultList(SessionFactoryScope scope) {
 		final SQLStatementInspector sqlStatementInterceptor = scope.getCollectingStatementInspector();

@@ -55,7 +55,7 @@ public class CompositeIdTypeBindingTest extends BaseCoreFunctionalTestCase {
 		parameters.add( new EmployeeGroupId( "c", "d" ) );
 		parameters.add( new EmployeeGroupId( "e", "f" ) );
 
-		List result = session.createQuery( "select eg from EmployeeGroup eg where eg.id in (:employeegroupIds)" )
+		List result = session.createQuery( "select eg from EmployeeGroup eg where eg.id in (:employeegroupIds) order by id" )
 				.setParameterList( "employeegroupIds", parameters ).list();
 
 		Assert.assertEquals( 2, result.size() );

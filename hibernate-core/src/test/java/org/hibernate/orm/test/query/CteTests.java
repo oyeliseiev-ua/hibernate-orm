@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseASEDialect;
 import org.hibernate.dialect.TiDBDialect;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
@@ -200,6 +201,7 @@ public class CteTests {
 	@Test
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "The emulation of CTEs in subqueries results in correlation in nesting level 2, which is not possible with Sybase ASE")
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "The TiDB version on CI seems to be buggy")
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	public void testSubquery(SessionFactoryScope scope) {
 		scope.inTransaction(
 				session -> {
@@ -247,6 +249,7 @@ public class CteTests {
 
 	@Test
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "The emulation of CTEs in subqueries results in correlation in nesting level 2, which is not possible with Sybase ASE")
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	public void testInSubquery(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
 			final HibernateCriteriaBuilder cb = session.getCriteriaBuilder();

@@ -1,9 +1,12 @@
 package org.hibernate.orm.test.query.hhh18291;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.JiraKey;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +21,8 @@ import jakarta.persistence.TypedQuery;
 @SessionFactory
 public class BooleanSubqueryTest {
 
+
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	@JiraKey("HHH-18292")
 	public void hhh18291Test(SessionFactoryScope scope) throws Exception {

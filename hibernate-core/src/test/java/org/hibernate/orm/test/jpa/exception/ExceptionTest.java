@@ -7,6 +7,7 @@
 package org.hibernate.orm.test.jpa.exception;
 
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.TiDBDialect;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -118,6 +119,7 @@ public class ExceptionTest {
 
 	@Test
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "TiDB do not support FK violation checking")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore do not support FK violation checking")
 	public void testConstraintViolationException(EntityManagerFactoryScope scope) {
 		scope.inEntityManager(
 				entityManager -> {

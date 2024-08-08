@@ -7,15 +7,18 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.SybaseDialect;
 import org.hibernate.type.descriptor.DateTimeUtils;
+
 
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import jakarta.persistence.Entity;
@@ -24,6 +27,7 @@ import jakarta.persistence.Id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support zoned timestamp")
 @DomainModel(annotatedClasses = UTCNormalizedZonedTest.Zoned.class)
 @SessionFactory
 @ServiceRegistry(settings = @Setting(name = AvailableSettings.TIMEZONE_DEFAULT_STORAGE, value = "NORMALIZE_UTC"))

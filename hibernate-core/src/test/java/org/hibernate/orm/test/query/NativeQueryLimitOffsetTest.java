@@ -8,6 +8,8 @@ package org.hibernate.orm.test.query;
 
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -16,6 +18,7 @@ import org.hibernate.testing.orm.junit.Jira;
 import org.hibernate.testing.orm.junit.JiraKey;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +59,7 @@ public class NativeQueryLimitOffsetTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testFullLimitOffsetOnNativeQuery(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -71,6 +75,7 @@ public class NativeQueryLimitOffsetTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testPartialLimitOffsetOnNativeQuery(SessionFactoryScope scope) {
 		scope.inTransaction(

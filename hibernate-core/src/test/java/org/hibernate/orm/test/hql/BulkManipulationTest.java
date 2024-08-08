@@ -19,6 +19,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.H2Dialect;
 import org.hibernate.dialect.MySQLDialect;
@@ -301,6 +302,7 @@ public class BulkManipulationTest extends BaseCoreFunctionalTestCase {
 		data.cleanup();
 	}
 
+	@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore limit is ignored for union clause")
 	@Test
 	@TestForIssue( jiraKey = "HHH-15161")
 	public void testInsertWithNullParamValueSetOperation() {

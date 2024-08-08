@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -26,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DomainModel(annotatedClasses = {DefaultedMapsIdTest.Loan.class, DefaultedMapsIdTest.Extension.class})
 public class DefaultedMapsIdTest {
 
+    @SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
     @Test void test(SessionFactoryScope scope) {
         ExtensionId eid = scope.fromTransaction( s -> {
             Loan loan = new Loan();

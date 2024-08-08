@@ -13,11 +13,13 @@ import java.util.Set;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import org.hibernate.testing.jdbc.SQLStatementInspector;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +49,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SessionFactory( useCollectingStatementInspector = true )
 public class SimpleMultipleLazySubSelectFetchTests {
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void smokeTest(SessionFactoryScope scope) {
 		final SQLStatementInspector statementInspector = scope.getCollectingStatementInspector();

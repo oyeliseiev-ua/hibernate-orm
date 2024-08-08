@@ -9,7 +9,8 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 // build a map of the database settings to use.
 ext {
-        db = project.hasProperty('db') ? project.getProperty('db') : 'h2'
+        db = project.hasProperty('db') ? project.getProperty('db') : 'singlestore'
+//        db = project.hasProperty('db') ? project.getProperty('db') : 'mysql_ci'
         dbHost = System.getProperty( 'dbHost', 'localhost' )
         dbService = System.getProperty( 'dbService', '' )
         runID = System.getProperty( 'runID', '' )
@@ -125,7 +126,7 @@ ext {
                         'jdbc.driver': 'com.mysql.cj.jdbc.Driver',
                         'jdbc.user'  : 'hibernate_orm_test',
                         'jdbc.pass'  : 'hibernate_orm_test',
-                        'jdbc.url'   : 'jdbc:mysql://' + dbHost + '/hibernate_orm_test?allowPublicKeyRetrieval=true',
+                        'jdbc.url'   : 'jdbc:mysql://' + dbHost + ':5506/hibernate_orm_test?allowPublicKeyRetrieval=true',
                         'jdbc.datasource' : 'com.mysql.jdbc.Driver',
 //                        'jdbc.datasource' : 'com.mysql.cj.jdbc.MysqlDataSource',
                         'connection.init_sql' : ''
@@ -375,6 +376,16 @@ ext {
                         'connection.init_sql' : '',
                         'jdbc.url'   : 'jdbc:Altibase://' + dbHost + ':20300/mydb?force_clob_bind=true',
                         'jdbc.datasource' : 'Altibase.jdbc.driver.AltibaseDriver'
+                ],
+                singlestore : [
+                        'db.dialect' : 'org.hibernate.community.dialect.SingleStoreDialect',
+                        'jdbc.driver': 'com.singlestore.jdbc.Driver',
+                        'jdbc.user'  : 'hibernate_orm_test',
+                        'jdbc.pass'  : 'hibernate_orm_test',
+                        'jdbc.url'   : 'jdbc:singlestore://' + dbHost + ':3306/hibernate_orm_test',
+                        'jdbc.datasource' : 'com.singlestore.jdbc.Driver',
+//                        'jdbc.datasource' : 'com.singlestore.jdbc.SingleStoreDataSource',
+                        'connection.init_sql' : ''
                 ],
         ]
 }

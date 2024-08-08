@@ -20,9 +20,11 @@ import jakarta.persistence.ManyToOne;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.annotations.JoinColumnOrFormula;
 import org.hibernate.annotations.JoinFormula;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.orm.test.jpa.BaseEntityManagerFunctionalTestCase;
 
 import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.Test;
 
 import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
@@ -61,6 +63,7 @@ public class JoinFormulaManyToOneLazyFetchingTest extends BaseEntityManagerFunct
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void testLazyLoading() {
 		List<Stock> stocks = doInJPA( this::entityManagerFactory, entityManager -> {
@@ -80,6 +83,7 @@ public class JoinFormulaManyToOneLazyFetchingTest extends BaseEntityManagerFunct
 		}
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void testEagerLoading() {
 		doInJPA( this::entityManagerFactory, entityManager -> {

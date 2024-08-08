@@ -19,9 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.hibernate.Hibernate;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.NativeQuery;
 
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -117,6 +119,7 @@ public class WhereTest extends BaseCoreFunctionalTestCase {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order.")
 	@Test
 	public void testNativeQuery() {
 		inTransaction(

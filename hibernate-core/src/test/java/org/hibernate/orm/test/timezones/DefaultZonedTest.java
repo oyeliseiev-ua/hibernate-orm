@@ -6,11 +6,13 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.SybaseDialect;
 import org.hibernate.dialect.TimeZoneSupport;
 import org.hibernate.type.descriptor.DateTimeUtils;
 
+import org.hibernate.testing.SkipForDialect;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
@@ -22,6 +24,7 @@ import jakarta.persistence.Id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore doesn't support zoned timestamp")
 @DomainModel(annotatedClasses = DefaultZonedTest.Zoned.class)
 @SessionFactory
 public class DefaultZonedTest {

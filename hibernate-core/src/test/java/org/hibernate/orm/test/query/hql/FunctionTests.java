@@ -9,6 +9,7 @@ package org.hibernate.orm.test.query.hql;
 import org.hamcrest.Matchers;
 import org.hibernate.QueryException;
 import org.hibernate.community.dialect.AltibaseDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DB2Dialect;
 import org.hibernate.dialect.DerbyDialect;
@@ -1035,6 +1036,7 @@ public class FunctionTests {
 	@SkipForDialect(dialectClass = DerbyDialect.class)
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true)
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "Altibase does not support offset of datetime")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore does not support offset of datetime")
 	public void testCastToOffsetDatetime(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
 			session.createQuery("select cast(datetime 1911-10-09 12:13:14-02:00 as String)", String.class).getSingleResult();
@@ -1303,6 +1305,8 @@ public class FunctionTests {
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true)
 	@SkipForDialect(dialectClass = AltibaseDialect.class,
 			reason = "Altibase timestampadd does not support seconds with fractional part")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class,
+			reason = "SingleStore timestampadd does not support seconds with fractional part")
 	public void testAddSecondsWithFractionalPart(SessionFactoryScope scope) {
 		scope.inTransaction(
 				session -> {
@@ -1369,6 +1373,7 @@ public class FunctionTests {
 
 	@Test
 	@SkipForDialect(dialectClass = MySQLDialect.class)
+	@SkipForDialect(dialectClass = SingleStoreDialect.class)
 	@SkipForDialect(dialectClass = MariaDBDialect.class)
 	@SkipForDialect(dialectClass = TiDBDialect.class)
 	@SkipForDialect(dialectClass = CockroachDialect.class, reason = "unsupported binary operator: <timestamptz> - <date>")
@@ -2308,6 +2313,7 @@ public class FunctionTests {
 		);
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class)
 	@Test
 	public void testIn(SessionFactoryScope scope) {
 		scope.inTransaction(

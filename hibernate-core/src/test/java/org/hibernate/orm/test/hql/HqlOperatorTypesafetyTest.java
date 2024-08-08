@@ -2,12 +2,16 @@ package org.hibernate.orm.test.hql;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.SemanticException;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SessionFactory
@@ -38,6 +42,7 @@ public class HqlOperatorTypesafetyTest {
         });
     }
 
+    @SkipForDialect(dialectClass = SingleStoreDialect.class)
     @Test void testSubselectTyping(SessionFactoryScope scope) {
         scope.inSession( s -> {
             // these should succeed

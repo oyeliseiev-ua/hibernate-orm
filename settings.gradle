@@ -243,6 +243,7 @@ dependencyResolutionManagement {
             def sybaseVersion = version "sybase", "1.3.1"
             def tidbVersion = version "tidb", mysqlVersion
             def altibaseVersion = version "altibase", "7.3.0.0.3"
+            def singlestoreVersion = version "singlestore", "1.2.3"
 
             library( "h2", "com.h2database", "h2" ).versionRef( h2Version )
             library( "h2gis", "org.orbisgis", "h2gis" ).versionRef( h2gisVersion )
@@ -264,6 +265,7 @@ dependencyResolutionManagement {
             library( "informix", "com.ibm.informix", "jdbc" ).versionRef( informixVersion )
             library( "firebird", "org.firebirdsql.jdbc", "jaybird" ).versionRef( firebirdVersion )
             library( "altibase", "com.altibase", "altibase-jdbc" ).versionRef( altibaseVersion )
+            library( "singlestore", "com.singlestore", "singlestore-jdbc-client" ).versionRef( singlestoreVersion )
         }
         mavenLibs {
             def mavenCoreVersion = version "mavenCore", "3.8.1"

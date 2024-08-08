@@ -6,25 +6,27 @@
  */
 package org.hibernate.orm.test.tm;
 
+import org.hibernate.JDBCException;
+import org.hibernate.Session;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
+import org.hibernate.orm.test.resource.transaction.jta.JtaPlatformStandardTestingImpl;
+
+import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.jta.TestingJtaBootstrap;
+import org.hibernate.testing.orm.junit.BaseSessionFactoryFunctionalTest;
+import org.hibernate.testing.orm.junit.SkipForDialect;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.Status;
 import jakarta.transaction.TransactionManager;
-
-import org.hibernate.JDBCException;
-import org.hibernate.Session;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.orm.test.resource.transaction.jta.JtaPlatformStandardTestingImpl;
-
-import org.hibernate.testing.TestForIssue;
-import org.hibernate.testing.jta.TestingJtaBootstrap;
-import org.hibernate.testing.orm.junit.BaseSessionFactoryFunctionalTest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -62,6 +64,7 @@ public class JtaBeforeCompletionFailureTest extends BaseSessionFactoryFunctional
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	@TestForIssue(jiraKey = "HHH-9888")
 	public void testUniqueConstraintViolationDuringManagedFlush() throws Exception {

@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.MySQLDialect;
 
 import org.hibernate.dialect.TiDBDialect;
@@ -36,6 +37,7 @@ import static org.junit.Assert.assertThat;
 @DomainModel( annotatedClasses = Staff.class )
 @SessionFactory
 @SkipForDialect(dialectClass = MySQLDialect.class, reason = "MySQL doesn't support casting to a VARCHAR(255)")
+@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support casting to a VARCHAR(255)")
 @SkipForDialect(dialectClass = TiDBDialect.class, reason = "TiDB doesn't support casting to a VARCHAR(255)")
 public class ColumnTransformerTest {
 	public static final double ERROR = 0.01d;

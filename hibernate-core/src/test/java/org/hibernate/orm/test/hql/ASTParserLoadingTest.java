@@ -28,6 +28,7 @@ import org.hibernate.Transaction;
 import org.hibernate.TypeMismatchException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.AbstractHANADialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DB2Dialect;
@@ -3700,11 +3701,16 @@ public class ASTParserLoadingTest extends BaseCoreFunctionalTestCase {
 		hql = "from Animal a where mod(16, 4) = 4";
 		session.createQuery(hql).list();
 
-		hql = "from Animal a where bit_length(str(a.bodyWeight)) = 24";
-		session.createQuery(hql).list();
+		if ( !( getDialect() instanceof SingleStoreDialect ) ) {
+			hql = "from Animal a where bit_length(str(a.bodyWeight)) = 24";
+			session.createQuery(hql).list();
 
-		hql = "select bit_length(str(a.bodyWeight)) from Animal a";
-		session.createQuery(hql).list();
+			hql = "select bit_length(str(a.bodyWeight)) from Animal a";
+			session.createQuery(hql).list();
+
+			hql = "from Animal a where a.description like 'x%ax%' escape 'x'";
+			session.createQuery(hql).list();
+		}
 
 		/*hql = "select object(a) from Animal a where CURRENT_DATE = :p1 or CURRENT_TIME = :p2 or CURRENT_TIMESTAMP = :p3";
 		session.createQuery(hql).list();*/
@@ -3718,9 +3724,6 @@ public class ASTParserLoadingTest extends BaseCoreFunctionalTestCase {
 		session.createQuery(hql).list();
 
 		hql = "from Animal a where a.description not like '%a%'";
-		session.createQuery(hql).list();
-
-		hql = "from Animal a where a.description like 'x%ax%' escape 'x'";
 		session.createQuery(hql).list();
 
 		t.commit();

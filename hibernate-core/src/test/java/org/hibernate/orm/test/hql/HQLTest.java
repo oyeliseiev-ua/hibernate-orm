@@ -25,6 +25,7 @@ import org.hibernate.CacheMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.community.dialect.FirebirdDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DerbyDialect;
 import org.hibernate.dialect.H2Dialect;
@@ -1892,7 +1893,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 	@Test
 	public void test_hql_collection_expressions_example_1() {
 		doInJPA(this::entityManagerFactory, entityManager -> {
-			Call call = entityManager.createQuery("select c from Call c", Call.class).getResultList().get(1);
+			Call call = entityManager.createQuery("select c from Call c order by id", Call.class).getResultList().get(1);
 			//tag::hql-collection-expressions-example[]
 			List<Phone> phones = entityManager.createQuery(
 				"select p " +
@@ -1909,7 +1910,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 	@Test
 	public void test_hql_collection_expressions_example_2() {
 		doInJPA(this::entityManagerFactory, entityManager -> {
-			Call call = entityManager.createQuery("select c from Call c", Call.class).getResultList().get(0);
+			Call call = entityManager.createQuery("select c from Call c order by id", Call.class).getResultList().get(0);
 			//tag::hql-collection-expressions-example[]
 
 			List<Phone> phones = entityManager.createQuery(
@@ -1940,6 +1941,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 		});
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ANY/ALL clause")
 	@Test
 	public void test_hql_collection_expressions_example_5() {
 		doInJPA(this::entityManagerFactory, entityManager -> {
@@ -1996,6 +1998,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 	}
 
 	@Test
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ANY/ALL clause")
 	@SkipForDialect(dialectClass = DerbyDialect.class, reason = "Comparisons between 'DATE' and 'TIMESTAMP' are not supported")
 	public void test_hql_collection_expressions_example_8() {
 		doInJPA(this::entityManagerFactory, entityManager -> {
@@ -2511,6 +2514,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 		});
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ANY/ALL clause")
 	@Test
 	public void test_hql_all_subquery_comparison_qualifier_example() {
 
@@ -2600,6 +2604,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 		});
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ESCAPE clause")
 	@Test
 	public void test_hql_like_predicate_escape_example() {
 
@@ -3225,6 +3230,7 @@ public class HQLTest extends BaseEntityManagerFunctionalTestCase {
 			DialectChecks.SupportsOrderByInCorrelatedSubquery.class
 	})
 	@SkipForDialect(dialectClass = OracleDialect.class, majorVersion = 11, reason = "The lateral emulation for Oracle 11 would be very complex because nested correlation is unsupported")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support nested correlation")
 	public void test_hql_derived_join_example() {
 
 		doInJPA(this::entityManagerFactory, entityManager -> {

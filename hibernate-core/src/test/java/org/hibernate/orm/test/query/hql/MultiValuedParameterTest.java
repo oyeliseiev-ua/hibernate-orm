@@ -13,12 +13,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 
 import org.hibernate.testing.orm.domain.contacts.Contact;
 import org.hibernate.testing.orm.domain.contacts.ContactsDomainModel;
 import org.hibernate.testing.orm.junit.BaseSessionFactoryFunctionalTest;
 import org.hibernate.testing.orm.junit.Jira;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -88,6 +90,7 @@ public class MultiValuedParameterTest extends BaseSessionFactoryFunctionalTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	@Jira( "https://hibernate.atlassian.net/browse/HHH-17492" )
 	public void test() {

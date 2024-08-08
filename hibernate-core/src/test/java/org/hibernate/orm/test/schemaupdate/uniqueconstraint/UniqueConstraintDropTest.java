@@ -20,6 +20,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Environment;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.unique.AlterTableUniqueDelegate;
 import org.hibernate.dialect.unique.AlterTableUniqueIndexDelegate;
@@ -41,6 +42,7 @@ import org.hibernate.tool.schema.spi.ScriptTargetOutput;
 import org.hibernate.tool.schema.spi.TargetDescriptor;
 
 import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -104,6 +106,7 @@ public class UniqueConstraintDropTest {
 		StandardServiceRegistryBuilder.destroy( ssr );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	@TestForIssue(jiraKey = "HHH-11236")
 	public void testUniqueConstraintIsDropped() throws Exception {

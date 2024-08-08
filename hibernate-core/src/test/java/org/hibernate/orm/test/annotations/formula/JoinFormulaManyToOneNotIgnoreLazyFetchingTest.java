@@ -14,12 +14,14 @@ import org.hibernate.annotations.JoinFormula;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.boot.model.internal.ToOneBinder;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.internal.CoreMessageLogger;
 import org.hibernate.orm.test.jpa.BaseEntityManagerFunctionalTestCase;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.logger.LoggerInspectionRule;
 import org.hibernate.testing.logger.Triggerable;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -78,6 +80,7 @@ public class JoinFormulaManyToOneNotIgnoreLazyFetchingTest extends BaseEntityMan
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void testLazyLoading() {
 		assertThat( triggerable.wasTriggered() )

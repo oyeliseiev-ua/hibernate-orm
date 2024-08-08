@@ -210,6 +210,10 @@ The following table illustrates a list of commands for various databases that ca
 |Informix
 |`./docker_db.sh informix`
 |`./gradlew test -Pdb=informix`
+
+|SingleStore
+|`./docker_db.sh singlestore`
+|`./gradlew test -Pdb=singlestore`
 |===
 
 To stop a container started by `docker`, use the command

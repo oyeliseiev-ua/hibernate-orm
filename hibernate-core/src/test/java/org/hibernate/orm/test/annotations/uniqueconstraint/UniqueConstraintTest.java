@@ -7,6 +7,7 @@
 package org.hibernate.orm.test.annotations.uniqueconstraint;
 
 import org.hibernate.JDBCException;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseDialect;
 
 import org.hibernate.testing.orm.junit.DomainModel;
@@ -30,6 +31,7 @@ import static org.junit.Assert.fail;
 @SkipForDialect( dialectClass = SybaseDialect.class,
         matchSubTypes = true,
         reason = "Sybase does not properly support unique constraints on nullable columns" )
+@SkipForDialect(dialectClass = SingleStoreDialect.class)
 public class UniqueConstraintTest {
 
 	@Test

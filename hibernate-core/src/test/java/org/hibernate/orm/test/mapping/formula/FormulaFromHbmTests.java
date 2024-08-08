@@ -8,6 +8,7 @@ package org.hibernate.orm.test.mapping.formula;
 
 import java.sql.Types;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.SybaseASEDialect;
 import org.hibernate.mapping.BasicValue;
@@ -66,6 +67,7 @@ public class FormulaFromHbmTests {
 
 	@Test
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "Sybase has no trim function which is used in the mapping", matchSubTypes = true)
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "Cast as varchar is not supported")
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "The MySQL JDBC driver doesn't support the JDBC escape for the concat function which is used in the mapping", matchSubTypes = true)
 	public void testBasicHqlUse(SessionFactoryScope scope) {
 		scope.inTransaction(

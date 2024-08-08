@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.JiraKey;
@@ -13,6 +14,7 @@ import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,7 @@ import jakarta.persistence.Table;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 @DomainModel(
 		annotatedClasses = {
 				BatchSubselectCollection2Test.EntityA.class,

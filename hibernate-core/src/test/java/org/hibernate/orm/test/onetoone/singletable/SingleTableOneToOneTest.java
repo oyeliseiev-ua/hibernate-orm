@@ -8,6 +8,7 @@ package org.hibernate.orm.test.onetoone.singletable;
 
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseDialect;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -65,6 +66,7 @@ public class SingleTableOneToOneTest {
 
 	@Test
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true, reason = "Sybase ignores unique constraints on nullable columns")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore ignores unique constraints")
 	public void testMultipleRelationshipsOnSingleTableInheritanceWronglyMappedAsOneToOne(SessionFactoryScope scope) {
 		assertThrows(
 				ConstraintViolationException.class,

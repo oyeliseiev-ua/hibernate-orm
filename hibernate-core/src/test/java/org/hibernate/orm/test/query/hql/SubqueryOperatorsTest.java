@@ -9,6 +9,7 @@ package org.hibernate.orm.test.query.hql;
 import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseASEDialect;
 
 import org.hibernate.testing.orm.domain.gambit.SimpleEntity;
@@ -30,6 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SessionFactory
 public class SubqueryOperatorsTest {
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL/ANY clause")
 	@Test
 	public void testEvery(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -42,6 +44,7 @@ public class SubqueryOperatorsTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL/ANY clause")
 	@Test
 	public void testAny(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -54,6 +57,7 @@ public class SubqueryOperatorsTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL/ANY clause")
 	@Test @SuppressWarnings("deprecation")
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "Sybase ASE does not allow a subquery in the order by clause, but we could move it to the select clause and refer to it by position", matchSubTypes = true)
 	public void testSubqueryInVariousClauses(SessionFactoryScope scope) {

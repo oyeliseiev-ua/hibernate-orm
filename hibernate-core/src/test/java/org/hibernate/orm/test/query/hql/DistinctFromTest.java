@@ -6,6 +6,7 @@
  */
 package org.hibernate.orm.test.query.hql;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseDialect;
 
 import org.hibernate.testing.orm.domain.StandardDomainModel;
@@ -117,6 +118,7 @@ public class DistinctFromTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "Select 1 with where clause is not supported by SingleStore")
 	@Test void testNulls(SessionFactoryScope scope) {
 		scope.inSession(session -> {
 			assertEquals(1, session.createSelectionQuery("select 1 where 1 is distinct from 0").getResultList().size());

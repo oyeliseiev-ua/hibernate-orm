@@ -13,12 +13,14 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.orm.test.jpa.metamodel.AbstractMetamodelSpecificTest;
 import org.hibernate.orm.test.jpa.metamodel.Customer;
 import org.hibernate.orm.test.jpa.metamodel.Customer_;
 import org.hibernate.orm.test.jpa.metamodel.Order;
 import org.hibernate.orm.test.jpa.metamodel.Order_;
 
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -67,6 +69,7 @@ public class UncorrelatedSubqueryTest extends AbstractMetamodelSpecificTest {
 		em.close();
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL clause")
 	@Test
 	public void testEqualAll() {
 		CriteriaBuilder builder = entityManagerFactory().getCriteriaBuilder();

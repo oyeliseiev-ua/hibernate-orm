@@ -18,6 +18,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.env.spi.IdentifierHelper;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
@@ -26,6 +27,7 @@ import org.hibernate.tool.schema.TargetType;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseUnitTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -39,6 +41,7 @@ import static org.junit.Assert.assertThat;
  * @author Andrea Boriero
  */
 
+@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore does not support foreign keys and referential integrity")
 public class ForeignKeyGenerationTest extends BaseUnitTestCase {
 	private File output;
 	private StandardServiceRegistry ssr;

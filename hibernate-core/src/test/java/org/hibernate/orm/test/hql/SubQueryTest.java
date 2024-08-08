@@ -113,7 +113,7 @@ public class SubQueryTest extends BaseCoreFunctionalTestCase {
 		s.beginTransaction();
 		String qry = "from Root as r " +
 				"where r.branch.branchName = 'branch' " +
-				"  and exists( from r.branch.leaves as s where s.leafName = 'leaf1')";
+				"  and exists( from r.branch.leaves as s where s.leafName = 'leaf1') order by r.id";
 		Root rootQueried = (Root) s.createQuery( qry ).uniqueResult();
 		assertEquals( root.rootName, rootQueried.rootName );
 		assertEquals( root.branch.branchName, rootQueried.branch.branchName );
@@ -126,7 +126,7 @@ public class SubQueryTest extends BaseCoreFunctionalTestCase {
 		s.beginTransaction();
 		qry = "from Root as r " +
 				"where r.branch.branchName = 'branch' " +
-				"  and exists( from r.branch.leaves as s where s.leafName = 'leaf3')";
+				"  and exists( from r.branch.leaves as s where s.leafName = 'leaf3') order by r.id";
 		assertNull( s.createQuery( qry ).uniqueResult() );
 		s.getTransaction().commit();
 		s.close();
@@ -134,7 +134,7 @@ public class SubQueryTest extends BaseCoreFunctionalTestCase {
 		s = openSession();
 		s.beginTransaction();
 		qry = "from Root as r " +
-				"where exists( from r.branch.leaves as s where r.branch.branchName = 'branch' and s.leafName = 'leaf1')";
+				"where exists( from r.branch.leaves as s where r.branch.branchName = 'branch' and s.leafName = 'leaf1') order by r.id";
 		rootQueried = (Root) s.createQuery( qry ).uniqueResult();
 		assertEquals( root.rootName, rootQueried.rootName );
 		assertEquals( root.branch.branchName, rootQueried.branch.branchName );
@@ -146,7 +146,7 @@ public class SubQueryTest extends BaseCoreFunctionalTestCase {
 		s = openSession();
 		s.beginTransaction();
 		qry = "from Root as r" +
-				" where exists( from Root r1 where r1.branch.branchName = r.branch.branchName and r1.branch.branchName != 'other branch')";
+				" where exists( from Root r1 where r1.branch.branchName = r.branch.branchName and r1.branch.branchName != 'other branch') order by r.id";
 		rootQueried = (Root) s.createQuery( qry ).uniqueResult();
 		assertEquals( root.rootName, rootQueried.rootName );
 		assertEquals( root.branch.branchName, rootQueried.branch.branchName );

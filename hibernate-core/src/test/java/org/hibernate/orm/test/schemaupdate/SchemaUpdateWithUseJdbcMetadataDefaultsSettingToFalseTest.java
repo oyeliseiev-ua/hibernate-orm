@@ -20,6 +20,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.hibernate.tool.hbm2ddl.SchemaValidator;
@@ -27,6 +28,7 @@ import org.hibernate.tool.schema.JdbcMetadaAccessStrategy;
 import org.hibernate.tool.schema.TargetType;
 
 import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,6 +40,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Andrea Boriero
  */
+@SkipForDialect( dialectClass = SingleStoreDialect.class)
 @TestForIssue(jiraKey = "HHH-13788")
 public class SchemaUpdateWithUseJdbcMetadataDefaultsSettingToFalseTest {
 

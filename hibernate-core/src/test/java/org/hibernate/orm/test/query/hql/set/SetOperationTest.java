@@ -8,6 +8,7 @@ package org.hibernate.orm.test.query.hql.set;
 
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.OracleDialect;
 import org.hibernate.query.SemanticException;
 
@@ -187,6 +188,7 @@ public class SetOperationTest {
     }
 
     @Test
+    @SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
     public void testUnionAllLimit(SessionFactoryScope scope) {
         scope.inSession(
@@ -222,6 +224,7 @@ public class SetOperationTest {
     }
 
     @Test
+    @SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsOrderByInSubquery.class)
     public void testUnionAllLimitNested(SessionFactoryScope scope) {
@@ -241,6 +244,7 @@ public class SetOperationTest {
 
     @Test
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
+    @SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsOrderByInSubquery.class)
     @SkipForDialect(dialectClass = OracleDialect.class, reason = "Bug in BasicFormatterImpl causes exception during formatting of the SQL string")
     public void testAlternatingSetOperator(SessionFactoryScope scope) {
@@ -263,6 +267,7 @@ public class SetOperationTest {
 
     @Test
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
+    @SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsOrderByInSubquery.class)
     public void testUnionAllOrderByAttribute(SessionFactoryScope scope) {
         scope.inSession(

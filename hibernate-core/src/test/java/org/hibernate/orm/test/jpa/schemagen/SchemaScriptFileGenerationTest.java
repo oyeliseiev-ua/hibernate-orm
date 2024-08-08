@@ -20,11 +20,13 @@ import java.util.regex.Pattern;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Environment;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.jpa.boot.spi.Bootstrap;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.orm.junit.EntityManagerFactoryBasedFunctionalTest;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 
 import org.junit.jupiter.api.AfterEach;
@@ -62,6 +64,7 @@ public class SchemaScriptFileGenerationTest {
 		}
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class)
 	@Test
 	@TestForIssue(jiraKey = "10601")
 	public void testGenerateSchemaDoesNotProduceTheSameStatementTwice() throws Exception {

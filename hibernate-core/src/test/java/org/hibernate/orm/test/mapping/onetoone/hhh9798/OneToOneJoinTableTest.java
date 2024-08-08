@@ -9,12 +9,14 @@ package org.hibernate.orm.test.mapping.onetoone.hhh9798;
 import jakarta.persistence.PersistenceException;
 
 import org.hibernate.Transaction;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.exception.ConstraintViolationException;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,7 @@ import static org.junit.Assert.fail;
 @SessionFactory
 public class OneToOneJoinTableTest {
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void storeNonUniqueRelationship(SessionFactoryScope scope) {
 		scope.inSession(

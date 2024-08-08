@@ -7,6 +7,7 @@
 package org.hibernate.test.agroal;
 
 import org.hibernate.community.dialect.AltibaseDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.TiDBDialect;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.agroal.internal.AgroalConnectionProvider;
@@ -19,6 +20,7 @@ import org.hibernate.testing.common.connections.BaseTransactionIsolationConfigTe
  */
 @SkipForDialect(value = TiDBDialect.class, comment = "Doesn't support SERIALIZABLE isolation")
 @SkipForDialect(value = AltibaseDialect.class, comment = "Altibase cannot change isolation level in autocommit mode")
+@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore supports TRANSACTION_READ_COMMITTED only")
 public class AgroalTransactionIsolationConfigTest extends BaseTransactionIsolationConfigTest {
 	@Override
 	protected ConnectionProvider getConnectionProviderUnderTest() {

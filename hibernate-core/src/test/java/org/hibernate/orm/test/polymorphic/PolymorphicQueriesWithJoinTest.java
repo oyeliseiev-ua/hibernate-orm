@@ -8,8 +8,10 @@ import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -97,6 +99,7 @@ public class PolymorphicQueriesWithJoinTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL/ANY clause")
 	@Test
 	public void testSelectWithWhereClause(SessionFactoryScope scope) {
 		scope.inTransaction(

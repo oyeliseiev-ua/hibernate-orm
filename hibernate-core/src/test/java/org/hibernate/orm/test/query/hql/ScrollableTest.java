@@ -15,12 +15,14 @@ import java.util.List;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 
 import org.junit.Test;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -96,6 +98,7 @@ public class ScrollableTest extends BaseCoreFunctionalTestCase {
 		}
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	@TestForIssue(jiraKey = "HHH-10860")
 	public void testScrollableResults2() {

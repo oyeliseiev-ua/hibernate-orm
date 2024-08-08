@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 
@@ -89,7 +90,7 @@ public class QuerySqlExceptionTest {
 		var dialect = entityManager.getEntityManagerFactory().unwrap( SessionFactoryImplementor.class )
 				.getJdbcServices().getDialect();
 		Object badParamValue;
-		if ( dialect instanceof MySQLDialect ) {
+		if ( dialect instanceof MySQLDialect || dialect instanceof SingleStoreDialect ) {
 			// These databases are perfectly fine with the operation `"foo" / 2`
 			// and will happily return `0.0` without any error...
 			// Let's give them something even more nonsensical

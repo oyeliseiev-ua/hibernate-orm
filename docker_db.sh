@@ -959,6 +959,76 @@ informix_12_10() {
     fi
 }
 
+singlestore() {
+  singlestore_8_5
+}
+
+singlestore_8_5() {
+    # SingleStore 8.5
+    $CONTAINER_CLI rm -f singlestoredb || true
+    $CONTAINER_CLI run -i --init --name singlestoredb -e LICENSE_KEY=$SINGLESTORE_LICENSE -e ROOT_PASSWORD=hibernate_orm_test -p3306:3306 singlestore/cluster-in-a-box:alma-8.5.7-bf633c1a54-4.0.17-1.17.8
+    $CONTAINER_CLI start singlestoredb
+    # Give the container some time to start
+    sleep 5
+    n=0
+    until [ "$n" -ge 5 ]
+    do
+        $CONTAINER_CLI exec singlestoredb bash -c "echo \"create database hibernate_orm_test; create user 'hibernate_orm_test' identified by 'hibernate_orm_test'; grant all on hibernate_orm_test.* to 'hibernate_orm_test'; SET GLOBAL warn_level= 'errors';\" | singlestore -v -v -v --user=root -h 127.0.0.1 -P 3306 --password=hibernate_orm_test" && break
+        echo "Waiting for SingleStore to start..."
+        n=$((n+1))
+        sleep 5
+    done
+    if [ "$n" -ge 5 ]; then
+      echo "SingleStore failed to start and configure after 25 seconds"
+    else
+      echo "SingleStore successfully started"
+    fi
+}
+
+singlestore_8_1() {
+    # SingleStore 8.1
+    $CONTAINER_CLI rm -f singlestoredb || true
+    $CONTAINER_CLI run -i --init --name singlestoredb -e LICENSE_KEY=$SINGLESTORE_LICENSE -e ROOT_PASSWORD=hibernate_orm_test -p3306:3306 singlestore/cluster-in-a-box:alma-8.1.32-e3d3cde6da-4.0.16-1.17.6
+    $CONTAINER_CLI start singlestoredb
+    # Give the container some time to start
+    sleep 5
+    n=0
+    until [ "$n" -ge 5 ]
+    do
+        $CONTAINER_CLI exec singlestoredb bash -c "echo \"create database hibernate_orm_test; create user 'hibernate_orm_test' identified by 'hibernate_orm_test'; grant all on hibernate_orm_test.* to 'hibernate_orm_test'; SET GLOBAL warn_level= 'errors';\" | singlestore -v -v -v --user=root -h 127.0.0.1 -P 3306 --password=hibernate_orm_test" && break
+        echo "Waiting for SingleStore to start..."
+        n=$((n+1))
+        sleep 5
+    done
+    if [ "$n" -ge 5 ]; then
+      echo "SingleStore failed to start and configure after 25 seconds"
+    else
+      echo "SingleStore successfully started"
+    fi
+}
+
+singlestore_8_0() {
+    # SingleStore 8.0
+    $CONTAINER_CLI rm -f singlestoredb || true
+    $CONTAINER_CLI run -i --init --name singlestoredb -e LICENSE_KEY=$SINGLESTORE_LICENSE -e ROOT_PASSWORD=hibernate_orm_test -p3306:3306 singlestore/cluster-in-a-box:alma-8.0.19-f48780d261-4.0.11-1.16.0
+    $CONTAINER_CLI start singlestoredb
+    # Give the container some time to start
+    sleep 5
+    n=0
+    until [ "$n" -ge 5 ]
+    do
+        $CONTAINER_CLI exec singlestoredb bash -c "echo \"create database hibernate_orm_test; create user 'hibernate_orm_test' identified by 'hibernate_orm_test'; grant all on hibernate_orm_test.* to 'hibernate_orm_test'; SET GLOBAL warn_level= 'errors';\" | singlestore -v -v -v --user=root -h 127.0.0.1 -P 3306 --password=hibernate_orm_test" && break
+        echo "Waiting for SingleStore to start..."
+        n=$((n+1))
+        sleep 5
+    done
+    if [ "$n" -ge 5 ]; then
+      echo "SingleStore failed to start and configure after 25 seconds"
+    else
+      echo "SingleStore successfully started"
+    fi
+}
+
 if [ -z ${1} ]; then
     echo "No db name provided"
     echo "Provide one of:"

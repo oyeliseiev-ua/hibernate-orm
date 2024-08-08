@@ -9,9 +9,12 @@ package org.hibernate.orm.test.map;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +58,7 @@ public class MapIndexFormulaTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "Cannot update shard key")
 	@Test
 	public void testIndexFormulaMap(SessionFactoryScope scope) {
 		User turin = new User( "turin", "tiger" );

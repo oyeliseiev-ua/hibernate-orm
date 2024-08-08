@@ -20,6 +20,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
@@ -30,6 +31,7 @@ import org.junit.Test;
 import org.hibernate.testing.ServiceRegistryBuilder;
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -82,6 +84,7 @@ public class SchemaMigrationTargetScriptCreationTest extends BaseCoreFunctionalT
 		}
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class)
 	@Test
 	@TestForIssue(jiraKey = "HHH-10684")
 	public void testTargetScriptIsCreated() throws Exception {

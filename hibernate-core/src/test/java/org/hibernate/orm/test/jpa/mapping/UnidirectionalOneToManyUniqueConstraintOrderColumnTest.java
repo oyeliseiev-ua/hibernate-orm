@@ -9,6 +9,9 @@ package org.hibernate.orm.test.jpa.mapping;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +26,14 @@ import org.hibernate.testing.orm.junit.EntityManagerFactoryScope;
 import org.hibernate.testing.orm.junit.FailureExpected;
 import org.hibernate.testing.orm.junit.JiraKey;
 import org.hibernate.testing.orm.junit.Jpa;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SkipForDialect( dialectClass = SingleStoreDialect.class)
 @JiraKey(value = "HHH-1268")
 @Jpa(annotatedClasses = {
 		UnidirectionalOneToManyUniqueConstraintOrderColumnTest.ParentData.class,

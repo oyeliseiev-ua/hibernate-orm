@@ -10,9 +10,11 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.engine.config.spi.ConfigurationService;
 import org.hibernate.tool.schema.internal.SchemaCreatorImpl;
 
+import org.hibernate.testing.SkipForDialect;
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseUnitTestCase;
 import org.hibernate.testing.util.ServiceRegistryUtil;
@@ -27,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Steve Ebersole
  */
+@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore doesn't support FK.")
 public class CollectionKeyFkNameTest extends BaseUnitTestCase {
 	private StandardServiceRegistry ssr;
 

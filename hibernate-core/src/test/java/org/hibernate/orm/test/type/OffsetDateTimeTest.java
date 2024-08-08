@@ -25,6 +25,7 @@ import jakarta.persistence.Id;
 import org.hibernate.annotations.TimeZoneStorageType;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.H2Dialect;
 import org.hibernate.query.Query;
 import org.hibernate.dialect.MariaDBDialect;
@@ -32,6 +33,7 @@ import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.SybaseDialect;
 import org.hibernate.type.StandardBasicTypes;
 
+import org.hibernate.testing.SkipForDialect;
 import org.hibernate.testing.TestForIssue;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
@@ -42,6 +44,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Andrea Boriero
  */
+@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore doesn't support timestamp offsets")
 @TestForIssue(jiraKey = "HHH-10372")
 public class OffsetDateTimeTest extends AbstractJavaTimeTypeTest<OffsetDateTime, OffsetDateTimeTest.EntityWithOffsetDateTime> {
 

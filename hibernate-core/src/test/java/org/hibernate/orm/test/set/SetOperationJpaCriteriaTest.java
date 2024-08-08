@@ -8,6 +8,7 @@ package org.hibernate.orm.test.set;
 
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
 import org.hibernate.query.criteria.JpaRoot;
@@ -21,6 +22,7 @@ import org.hibernate.testing.orm.junit.RequiresDialectFeature;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,6 +82,7 @@ public class SetOperationJpaCriteriaTest {
         );
     }
 
+    @SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @Test
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
     public void testUnionAllLimit(SessionFactoryScope scope) {
@@ -134,6 +137,7 @@ public class SetOperationJpaCriteriaTest {
     }
 
     @Test
+    @SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support UNION/UNION ALL with limit clause")
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUnion.class)
     @RequiresDialectFeature(feature = DialectFeatureChecks.SupportsOrderByInSubquery.class)
     public void testUnionAllLimitNested(SessionFactoryScope scope) {

@@ -13,10 +13,12 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Transaction;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -120,6 +122,7 @@ public class StatelessSessionTest {
 				} );
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore is restricted to update primary key/shard key")
 	@Test
 	public void testHqlBulk(SessionFactoryScope scope) {
 		scope.inStatelessSession(

@@ -18,6 +18,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.JdbcSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.DB2Dialect;
 import org.hibernate.dialect.DatabaseVersion;
 import org.hibernate.dialect.DerbyDialect;
@@ -118,6 +119,8 @@ public class MetadataAccessTests {
 						getVersionConstant( MariaDBDialect.class, "MINIMUM_VERSION") ),
 				Arguments.of( "MySQL", MySQLDialect.class,
 						getVersionConstant( MySQLDialect.class, "MINIMUM_VERSION") ),
+				Arguments.of( "SingleStore", SingleStoreDialect.class,
+							  getVersionConstant( SingleStoreDialect.class, "MINIMUM_VERSION") ),
 				Arguments.of( "Oracle", OracleDialect.class,
 						getVersionConstant( OracleDialect.class, "MINIMUM_VERSION") ),
 				Arguments.of( "PostgreSQL", PostgreSQLDialect.class,

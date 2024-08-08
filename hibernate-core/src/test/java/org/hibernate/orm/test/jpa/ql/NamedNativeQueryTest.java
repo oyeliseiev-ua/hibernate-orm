@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.dialect.MySQLDialect;
@@ -152,6 +153,7 @@ public class NamedNativeQueryTest extends BaseCoreFunctionalTestCase {
 	@Test
 	@SkipForDialect( value = MySQLDialect.class, comment = "MySQL appears to have trouble with fe.id selected twice in one statement")
 	@SkipForDialect( value = SQLServerDialect.class, comment = "SQL Server does not support the || operator.")
+	@SkipForDialect( value = SingleStoreDialect.class)
 	// TODO: Re-form DestinationEntity.insertSelect to something more supported?
 	public void testInsertMultipleValues() {
 		final String name = "Name";

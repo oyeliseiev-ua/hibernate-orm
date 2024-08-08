@@ -134,6 +134,9 @@ dependencies {
 	else if ( db.startsWith( 'informix' ) ) {
 		testRuntimeOnly dbLibs.informix
 	}
+	else if ( db.startsWith( 'singlestore' ) ) {
+		testRuntimeOnly dbLibs.singlestore
+	}
 
 	annotationProcessor libs.loggingProcessor
 	annotationProcessor libs.logging

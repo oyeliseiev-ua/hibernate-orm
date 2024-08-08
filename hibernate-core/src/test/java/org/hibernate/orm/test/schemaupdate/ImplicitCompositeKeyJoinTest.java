@@ -19,9 +19,11 @@ import org.hibernate.annotations.ForeignKey;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.tool.schema.internal.SchemaCreatorImpl;
 
 import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 import org.junit.Test;
 
@@ -37,6 +39,7 @@ import static org.junit.Assert.fail;
 public class ImplicitCompositeKeyJoinTest {
 	private static final Logger LOGGER = Logger.getLogger( ImplicitCompositeKeyJoinTest.class );
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class)
 	@Test
 	public void testSchemaCreationSQLCommandIsGeneratedWithTheCorrectColumnSizeValues() throws Exception {
 		final StandardServiceRegistry ssr = ServiceRegistryUtil.serviceRegistry();

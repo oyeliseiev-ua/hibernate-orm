@@ -8,6 +8,7 @@ package org.hibernate.orm.test.query.hql;
 
 import java.time.LocalDate;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.SybaseASEDialect;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
@@ -70,7 +71,8 @@ public class InsertConflictTests {
 									"values (1, 'John') " +
 									"on conflict do nothing"
 					).executeUpdate();
-					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect ) {
+					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect
+					|| scope.getSessionFactory().getJdbcServices().getDialect() instanceof SingleStoreDialect) {
 						// Since JDBC set the MySQL CLIENT_FOUND_ROWS flag, the updated count is 1 even if values didn't change
 						// Also see https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html
 						assertEquals( 1, updated );
@@ -97,7 +99,8 @@ public class InsertConflictTests {
 									"set data = excluded.data"
 					).executeUpdate();
 					//end::hql-insert-conflict-example[]
-					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect ) {
+					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect
+							|| scope.getSessionFactory().getJdbcServices().getDialect() instanceof SingleStoreDialect ) {
 						// Strange MySQL returns 2 if the conflict action updates a row
 						// Also see https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html
 						assertEquals( 2, updated );
@@ -123,7 +126,8 @@ public class InsertConflictTests {
 									"set data = excluded.data " +
 									"where id > 1"
 					).executeUpdate();
-					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect ) {
+					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect
+							|| scope.getSessionFactory().getJdbcServices().getDialect() instanceof SingleStoreDialect ) {
 						// Since JDBC set the MySQL CLIENT_FOUND_ROWS flag, the updated count is 1 even if values didn't change
 						// Also see https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html
 						assertEquals( 1, updated );
@@ -159,7 +163,8 @@ public class InsertConflictTests {
 							.set( "data", conflictClause.getExcludedRoot().get( "data" ) )
 							.where( cb.gt( insert.getTarget().get( "id" ), 1 ) );
 					int updated = session.createMutationQuery( insert ).executeUpdate();
-					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect ) {
+					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect
+							|| scope.getSessionFactory().getJdbcServices().getDialect() instanceof SingleStoreDialect) {
 						// Since JDBC set the MySQL CLIENT_FOUND_ROWS flag, the updated count is 1 even if values didn't change
 						// Also see https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html
 						assertEquals( 1, updated );
@@ -186,7 +191,8 @@ public class InsertConflictTests {
 									"values (1, ('John', 'Doe')) " +
 									"on conflict do nothing"
 					).executeUpdate();
-					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect ) {
+					if ( scope.getSessionFactory().getJdbcServices().getDialect() instanceof MySQLDialect
+							|| scope.getSessionFactory().getJdbcServices().getDialect() instanceof SingleStoreDialect) {
 						// Since JDBC set the MySQL CLIENT_FOUND_ROWS flag, the updated count is 1 even if values didn't change
 						// Also see https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html
 						assertEquals( 1, updated );
@@ -205,6 +211,7 @@ public class InsertConflictTests {
 	@Test
 	@RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUpsertOrMerge.class)
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "MERGE into a table that has a self-referential FK does not work")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support update with multi tables ")
 	public void testOnConflictDoUpdateMultiTable(SessionFactoryScope scope) {
 		scope.inTransaction(
 				session -> {
@@ -232,6 +239,7 @@ public class InsertConflictTests {
 
 	@Test
 	@RequiresDialectFeature(feature = DialectFeatureChecks.SupportsUpsertOrMerge.class)
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support update with multi tables ")
 	@SkipForDialect(dialectClass = SybaseASEDialect.class, reason = "MERGE into a table that has a self-referential FK does not work")
 	public void testOnConflictDoUpdateWithWhereMultiTable(SessionFactoryScope scope) {
 		scope.inTransaction(

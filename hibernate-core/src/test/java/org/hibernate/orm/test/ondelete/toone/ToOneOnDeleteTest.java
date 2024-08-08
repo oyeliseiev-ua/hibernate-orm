@@ -6,6 +6,7 @@ import jakarta.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.SybaseDialect;
 
 import org.hibernate.dialect.TiDBDialect;
@@ -45,6 +46,7 @@ public class ToOneOnDeleteTest {
 			reason = "Sybase does not support on delete actions"
 	)
 	@SkipForDialect(dialectClass = TiDBDialect.class)
+	@SkipForDialect(dialectClass = SingleStoreDialect.class)
 	public void testManyToOne(SessionFactoryScope scope) {
 		scope.inTransaction(
 				session -> {

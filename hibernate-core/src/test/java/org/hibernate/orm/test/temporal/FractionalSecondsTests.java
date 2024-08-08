@@ -16,6 +16,7 @@ import java.time.ZonedDateTime;
 import org.hibernate.annotations.FractionalSeconds;
 import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.community.dialect.AltibaseDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DerbyDialect;
 import org.hibernate.dialect.Dialect;
@@ -142,6 +143,7 @@ public class FractionalSecondsTests {
 	@DomainModel(annotatedClasses = TestEntity3.class)
 	@SessionFactory
 	@SkipForDialect(dialectClass = DerbyDialect.class, reason = "Derby does not support sized timestamp")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "DATETIME type with precision other than 0 or 6 is not supported by SingleStore")
 	@SkipForDialect(dialectClass = HANADialect.class, reason = "HANA does not support specifying a precision on timestamps")
 	@SkipForDialect(dialectClass = SybaseDialect.class, reason = "Because... Sybase...", matchSubTypes = true)
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "Altibase does not support specifying a precision on timestamps")
@@ -166,6 +168,7 @@ public class FractionalSecondsTests {
 	@DomainModel(annotatedClasses = TestEntity9.class)
 	@SessionFactory
 	@SkipForDialect(dialectClass = MariaDBDialect.class, reason = "MariaDB only supports precision <= 6")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "DATETIME type with precision other than 0 or 6 is not supported by SingleStore")
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "MySQL only supports precision <= 6", matchSubTypes = true)
 	@SkipForDialect(dialectClass = SQLServerDialect.class, reason = "SQL Server only supports precision <= 6")
 	@SkipForDialect(dialectClass = SybaseDialect.class, reason = "Because... Sybase...", matchSubTypes = true)

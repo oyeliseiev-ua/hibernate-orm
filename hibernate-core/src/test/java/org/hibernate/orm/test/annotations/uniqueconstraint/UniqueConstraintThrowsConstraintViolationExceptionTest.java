@@ -15,8 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Table;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.exception.ConstraintViolationException;
 
+import org.hibernate.testing.SkipForDialect;
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
@@ -28,6 +30,7 @@ import static org.junit.Assert.fail;
 /**
  * @author Vlad Mihalcea
  */
+@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore unique keys are restricted.")
 @TestForIssue(jiraKey = "HHH-11236")
 public class UniqueConstraintThrowsConstraintViolationExceptionTest extends BaseCoreFunctionalTestCase {
 

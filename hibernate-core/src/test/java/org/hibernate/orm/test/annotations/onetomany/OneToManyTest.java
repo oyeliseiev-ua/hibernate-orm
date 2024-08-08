@@ -33,6 +33,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PersistentClass;
@@ -43,6 +44,7 @@ import org.hibernate.testing.DialectChecks;
 import org.hibernate.testing.RequiresDialectFeature;
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseNonConfigCoreFunctionalTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 
 import org.hibernate.orm.test.annotations.Customer;
@@ -142,6 +144,7 @@ public class OneToManyTest extends BaseNonConfigCoreFunctionalTestCase {
 
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void testUnidirectionalDefault() throws Exception {
 		Session s;
@@ -180,7 +183,7 @@ public class OneToManyTest extends BaseNonConfigCoreFunctionalTestCase {
 		trainer.setTrainedTigers( new HashSet<Tiger>() );
 		trainer.getTrainedTigers().add( whiteTiger );
 		try {
-			s.persist( trainer );
+			s.persist( trainer );//no unique
 			tx.commit();
 			fail( "A one to many should not allow several trainer per Tiger" );
 		}

@@ -34,4 +34,6 @@ elif [ "$RDBMS" == 'hana' ]; then
   bash $DIR/../docker_db.sh hana
 elif [ "$RDBMS" == 'informix' ]; then
   bash $DIR/../docker_db.sh informix
+elif [ "$RDBMS" == 'singlestore' ]; then
+  bash $DIR/../docker_db.sh singlestore
 fi

@@ -5,6 +5,7 @@ import java.time.temporal.ChronoField;
 import java.util.TimeZone;
 
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.SybaseDialect;
 import org.hibernate.type.descriptor.DateTimeUtils;
@@ -13,6 +14,7 @@ import org.hibernate.testing.jdbc.SharedDriverManagerConnectionProviderImpl;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import jakarta.persistence.Entity;
@@ -56,6 +58,7 @@ public class UTCNormalizedInstantTest {
 		});
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support zoned timestamp")
 	@Test void testWithSystemTimeZone(SessionFactoryScope scope) {
 		final TimeZone timeZoneBefore = TimeZone.getDefault();
 		TimeZone.setDefault( TimeZone.getTimeZone( "CET" ) );

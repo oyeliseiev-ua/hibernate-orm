@@ -6,9 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import org.hibernate.Hibernate;
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DomainModel(annotatedClasses = {MappedByNonAssociationTest.Loan.class, MappedByNonAssociationTest.Extensions.class})
 public class MappedByNonAssociationTest {
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "Shard key cannot be updated")
 	@Test void test(SessionFactoryScope scope) {
 		Extensions ex = new Extensions();
 		ex.exExtensionDays = 3L;

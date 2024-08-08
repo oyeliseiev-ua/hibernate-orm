@@ -1,16 +1,20 @@
 package org.hibernate.orm.test.query.hql;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import static org.hibernate.cfg.QuerySettings.PORTABLE_INTEGER_DIVISION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "Select 1 with where clause is not supported by SingleStore")
 @DomainModel
 @SessionFactory
 @ServiceRegistry(settings = @Setting(name = PORTABLE_INTEGER_DIVISION, value = "true"))

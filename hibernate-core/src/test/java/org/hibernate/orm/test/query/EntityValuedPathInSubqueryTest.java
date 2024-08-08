@@ -6,10 +6,13 @@
  */
 package org.hibernate.orm.test.query;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.Jira;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,6 +53,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testReference(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -62,6 +66,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testReferenceSelectEntity(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -74,6 +79,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testExplicitFkReference(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -86,6 +92,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testImplicitJoin(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -98,6 +105,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testImplicitJoinSelectReference(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -110,6 +118,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testReferenceCriteria(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -131,6 +140,8 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testReferenceSelectEntityCriteria(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -152,6 +163,7 @@ public class EntityValuedPathInSubqueryTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Test
 	public void testExplicitFkReferenceCriteria(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {

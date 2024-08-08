@@ -6,6 +6,7 @@
  */
 package org.hibernate.orm.test.query;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.OracleDialect;
 
 import org.hibernate.testing.orm.junit.DomainModel;
@@ -54,6 +55,7 @@ public class EntityValuedInSubqueryGroupAndOrderTest {
 	}
 
 	@Test
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@SkipForDialect(dialectClass = OracleDialect.class, majorVersion = 23, reason = "Oracle 23c bug")
 	public void testInSubqueryGroupBy(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {
@@ -70,6 +72,7 @@ public class EntityValuedInSubqueryGroupAndOrderTest {
 	}
 
 	@Test
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support subselect with reference to outer table fields")
 	@Jira( "https://hibernate.atlassian.net/browse/HHH-17231" )
 	public void testInSubqueryGroupByProp(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {

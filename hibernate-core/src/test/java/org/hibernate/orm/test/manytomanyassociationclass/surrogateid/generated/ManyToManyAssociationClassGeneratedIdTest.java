@@ -9,10 +9,13 @@ package org.hibernate.orm.test.manytomanyassociationclass.surrogateid.generated;
 import java.util.HashSet;
 import jakarta.persistence.PersistenceException;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.exception.ConstraintViolationException;
 
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
+
 import org.hibernate.orm.test.manytomanyassociationclass.AbstractManyToManyAssociationClassTest;
 import org.hibernate.orm.test.manytomanyassociationclass.Membership;
 import org.junit.jupiter.api.Test;
@@ -28,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @DomainModel(
 		xmlMappings = "org/hibernate/orm/test/manytomanyassociationclass/surrogateid/generated/Mappings.hbm.xml"
 )
+@SkipForDialect( dialectClass = SingleStoreDialect.class)
 public class ManyToManyAssociationClassGeneratedIdTest extends AbstractManyToManyAssociationClassTest {
 	@Override
 	public Membership createMembership(String name) {

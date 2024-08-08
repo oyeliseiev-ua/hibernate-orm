@@ -377,6 +377,7 @@ public class OuterJoinTest {
 		} );
 	}
 
+	//complex
 	@Test
 	@RequiresDialectFeature(feature = DialectFeatureChecks.SupportsSubqueryInOnClause.class)
 	public void testJoinOrderWithRightJoinWithInnerImplicitJoins(EntityManagerFactoryScope scope) {

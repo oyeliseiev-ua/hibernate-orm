@@ -28,6 +28,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.env.spi.IdentifierHelper;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
@@ -40,6 +41,7 @@ import org.junit.Test;
 
 import org.hibernate.testing.TestForIssue;
 import org.hibernate.testing.junit4.BaseUnitTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 
 import static org.hamcrest.Matchers.containsString;
@@ -67,6 +69,7 @@ public class JoinedInheritanceForeignKeyTest extends BaseUnitTestCase {
 		StandardServiceRegistryBuilder.destroy( ssr );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore does not support foreign keys and referential integrity")
 	@Test
 	public void testForeignKeyHasCorrectName() throws Exception {
 		createSchema( new Class[] {Role.class, User.class, Person.class} );

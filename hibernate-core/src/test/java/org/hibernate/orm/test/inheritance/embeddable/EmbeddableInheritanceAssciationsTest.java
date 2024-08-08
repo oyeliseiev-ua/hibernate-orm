@@ -9,9 +9,12 @@ package org.hibernate.orm.test.inheritance.embeddable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -98,6 +101,7 @@ public class EmbeddableInheritanceAssciationsTest {
 		} );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testManyToMany(SessionFactoryScope scope) {
 		scope.inTransaction( session -> {

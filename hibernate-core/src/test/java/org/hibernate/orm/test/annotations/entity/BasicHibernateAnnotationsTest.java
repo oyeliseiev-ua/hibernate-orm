@@ -8,6 +8,7 @@ package org.hibernate.orm.test.annotations.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashSet;
@@ -176,7 +177,7 @@ public class BasicHibernateAnnotationsTest extends BaseCoreFunctionalTestCase {
 		s = openSession();
 		tx = s.beginTransaction();
 
-		Query<Doctor> query = s.createQuery( "from " + Doctor.class.getName(), Doctor.class );
+		Query<Doctor> query = s.createQuery( "from " + Doctor.class.getName() + " order by id", Doctor.class );
 		List<Doctor> list = query.getResultList();
 
 		assertEquals( 2, list.size() );

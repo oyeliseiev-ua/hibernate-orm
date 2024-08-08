@@ -12,8 +12,10 @@ import org.hibernate.testing.orm.domain.gambit.BasicEntity;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.hibernate.community.dialect.SingleStoreDialect;
 
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Path;
@@ -23,6 +25,7 @@ import jakarta.persistence.criteria.Subquery;
 /**
  * @author Steve Ebersole
  */
+@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't support ALL/ANY clause")
 @DomainModel( annotatedClasses = BasicEntity.class )
 @SessionFactory
 public class SubQueryTests {

@@ -18,6 +18,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.spi.MetadataImplementor;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -28,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.hibernate.testing.TestForIssue;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.hibernate.testing.util.ServiceRegistryUtil;
 
 import static org.hamcrest.core.Is.is;
@@ -55,6 +57,7 @@ public class SchemaCreationTest {
 		StandardServiceRegistryBuilder.destroy( ssr );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	@TestForIssue(jiraKey = "HHH-10553")
 	public void testUniqueConstraintIsCorrectlyGenerated() throws Exception {

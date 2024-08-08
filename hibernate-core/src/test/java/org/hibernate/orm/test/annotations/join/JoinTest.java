@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -24,6 +25,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.mapping.Join;
 
 import org.hibernate.testing.junit4.BaseNonConfigCoreFunctionalTestCase;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.Test;
 
 import static org.hibernate.testing.junit4.ExtraAssertions.assertTyping;
@@ -159,7 +161,8 @@ public class JoinTest extends BaseNonConfigCoreFunctionalTestCase {
 		s.getTransaction().commit();
 		s.close();
 	}
-	
+
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore unique keys are restricted")
 	@Test
 	public void testUniqueConstaintOnSecondaryTable() {
 		Cat cat = new Cat();

@@ -26,6 +26,7 @@ import org.hibernate.annotations.Nationalized;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.community.dialect.AltibaseDialect;
 import org.hibernate.community.dialect.FirebirdDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.AbstractHANADialect;
 import org.hibernate.dialect.AbstractTransactSQLDialect;
 import org.hibernate.dialect.CockroachDialect;
@@ -127,6 +128,7 @@ public class NativeQueryResultTypeAutoDiscoveryTest {
 
 	@Test
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true, reason = "No support for the bit datatype so we use tinyint")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, matchSubTypes = true, reason = "No support for the bit datatype so we use tinyint")
 	@SkipForDialect(dialectClass = OracleDialect.class, reason = "No support for the bit datatype so we use number(1,0)")
 	@SkipForDialect(dialectClass = DB2Dialect.class, majorVersion = 10, reason = "No support for the bit datatype so we use smallint")
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "No support for the bit datatype so we use char(1)")
@@ -137,6 +139,7 @@ public class NativeQueryResultTypeAutoDiscoveryTest {
 
 	@Test
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true, reason = "No support for the bit datatype so we use tinyint")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, matchSubTypes = true, reason = "No support for the bit datatype so we use tinyint")
 	@SkipForDialect(dialectClass = OracleDialect.class, reason = "No support for the bit datatype so we use number(1,0)")
 	@SkipForDialect(dialectClass = DB2Dialect.class, majorVersion = 10, reason = "No support for the bit datatype so we use smallint")
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "No support for the bit datatype so we use char(1)")
@@ -165,6 +168,7 @@ public class NativeQueryResultTypeAutoDiscoveryTest {
 	@SkipForDialect(dialectClass = H2Dialect.class, reason = "Turns floats into doubles in result sets and advertises the type as double in the metadata")
 	@SkipForDialect(dialectClass = HSQLDialect.class, reason = "Turns floats into doubles in result sets and advertises the type as double in the metadata")
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "Turns floats into doubles in result sets and advertises the type as double in the metadata")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "Turns floats into doubles in result sets and advertises the type as double in the metadata")
 	public void floatType() {
 		createEntityManagerFactory( FloatEntity.class );
 		doTest( FloatEntity.class, 15516.125f );
@@ -172,6 +176,7 @@ public class NativeQueryResultTypeAutoDiscoveryTest {
 
 	@Test
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "Turns reals into doubles in result sets and advertises the type as double in the metadata")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "Turns reals into doubles in result sets and advertises the type as double in the metadata")
 	@SkipForDialect(dialectClass = MariaDBDialect.class, reason = "Turns reals into doubles in result sets and advertises the type as double in the metadata")
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "Turns reals into doubles in result sets and advertises the type as double in the metadata")
 	@SkipForDialect(dialectClass = HSQLDialect.class, reason = "Turns reals into doubles in result sets and advertises the type as double in the metadata")

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.community.dialect.AltibaseDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.DB2Dialect;
 import org.hibernate.dialect.SQLServerDialect;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
@@ -258,6 +259,7 @@ public class CriteriaWindowFunctionTest {
 
 	@Test
 	@SkipForDialect(dialectClass = DB2Dialect.class, majorVersion = 10, reason = "No support for percent_rank and cume_dist functions")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "No support for percent_rank and cume_dist functions")
 	@SkipForDialect(dialectClass = AltibaseDialect.class, reason = "No support for percent_rank and cume_dist functions with over clause")
 	public void testReusableWindow(SessionFactoryScope scope) {
 		scope.inTransaction(

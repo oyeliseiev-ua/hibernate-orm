@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 
@@ -21,6 +22,7 @@ import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,6 +72,7 @@ public class ILikeCriteriaTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore like clause is case insensitive")
 	@Test
 	public void testLike(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -91,6 +94,7 @@ public class ILikeCriteriaTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore like clause is case insensitive")
 	@Test
 	public void testLikeEscape(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -122,6 +126,7 @@ public class ILikeCriteriaTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore like clause is case insensitive")
 	@Test
 	public void testNotLike(SessionFactoryScope scope) {
 		scope.inTransaction(
@@ -143,6 +148,7 @@ public class ILikeCriteriaTest {
 		);
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore like clause is case insensitive")
 	@Test
 	public void testNotLikeEscape(SessionFactoryScope scope) {
 		scope.inTransaction(

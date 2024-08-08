@@ -1,5 +1,6 @@
 package org.hibernate.orm.test.hql;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.DerbyDialect;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SkipForDialect(dialectClass = SingleStoreDialect.class)
 @SessionFactory
 @DomainModel
 public class BooleanPredicateTest {

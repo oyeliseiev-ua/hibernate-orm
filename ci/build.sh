@@ -76,6 +76,8 @@ elif [ "$RDBMS" == "altibase" ]; then
   goal="-Pdb=altibase"
 elif [ "$RDBMS" == "informix" ]; then
   goal="-Pdb=informix"
+elif [ "$RDBMS" == "singlestore" ]; then
+  goal="-Pdb=singlestore"
 fi
 
 # Only run checkstyle in the H2 build,

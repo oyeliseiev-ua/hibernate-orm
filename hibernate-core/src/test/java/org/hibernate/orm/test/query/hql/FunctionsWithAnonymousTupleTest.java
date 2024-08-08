@@ -8,11 +8,14 @@ package org.hibernate.orm.test.query.hql;
 
 import java.util.List;
 
+import org.hibernate.community.dialect.SingleStoreDialect;
+
 import org.hibernate.testing.orm.domain.gambit.EntityOfBasics;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.Jira;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -79,6 +82,7 @@ public class FunctionsWithAnonymousTupleTest {
 		assertThat( resultList.get( 0 ).get( 1 ) ).isEqualTo( 1.5d );
 	}
 
+	@SkipForDialect( dialectClass = SingleStoreDialect.class, reason = "SingleStore doesn't guarantee select order")
 	@Test
 	public void testFloor(SessionFactoryScope scope) {
 		final List<Tuple> resultList = executeQuery( scope, "floor(a.theInt)", false );

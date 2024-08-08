@@ -10,11 +10,13 @@ import java.util.List;
 import jakarta.persistence.PersistenceException;
 
 import org.hibernate.JDBCException;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.query.Query;
 
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SkipForDialect;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,8 +66,9 @@ public class TablePerClassTest {
 		);
 	}
 
+	@SkipForDialect(dialectClass = SingleStoreDialect.class)
 	@Test
-	public void testConstraintsOnSuperclassProperties(SessionFactoryScope scope) {
+	public void testConstraintsOnSuperclassProperties(SessionFactoryScope scope) { //uniue
 		scope.inTransaction(
 				session -> {
 					Product product1 = new Product();

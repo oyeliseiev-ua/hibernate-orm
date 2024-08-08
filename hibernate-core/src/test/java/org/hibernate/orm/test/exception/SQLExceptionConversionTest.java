@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.Types;
 
 import org.hibernate.Session;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.AbstractHANADialect;
 import org.hibernate.dialect.TiDBDialect;
 import org.hibernate.engine.jdbc.spi.JdbcCoordinator;
@@ -46,6 +47,7 @@ public class SQLExceptionConversionTest extends BaseCoreFunctionalTestCase {
 	@Test
 	@SkipForDialect(value = AbstractHANADialect.class, comment = "Hana do not support FK violation checking")
 	@SkipForDialect(value = TiDBDialect.class, comment = "TiDB do not support FK violation checking")
+	@SkipForDialect(value = SingleStoreDialect.class, comment = "SingleStore do not support FK violation checking")
 	public void testIntegrityViolation() {
 		final Session session = openSession();
 		session.beginTransaction();

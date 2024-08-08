@@ -23,6 +23,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.community.dialect.AltibaseDialect;
 import org.hibernate.community.dialect.FirebirdDialect;
+import org.hibernate.community.dialect.SingleStoreDialect;
 import org.hibernate.dialect.AbstractHANADialect;
 import org.hibernate.dialect.CockroachDialect;
 import org.hibernate.dialect.DB2Dialect;
@@ -98,6 +99,7 @@ public class FilterParameterTests extends AbstractStatefulStatelessFilterTest {
 	@SkipForDialect(dialectClass = DerbyDialect.class, reason = "Derby silently converts a boolean to string types")
 	@SkipForDialect(dialectClass = DB2Dialect.class, reason = "DB2 silently converts a boolean to string types")
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "MySQL silently converts a boolean to string types")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore silently converts strings to integral types")
 	@SkipForDialect(dialectClass = MariaDBDialect.class, reason = "MariaDB silently converts a boolean to string types")
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "TiDB silently converts a boolean to string types")
 	@SkipForDialect(dialectClass = SybaseDialect.class, matchSubTypes = true, reason = "Sybase silently converts a boolean to string types")
@@ -153,6 +155,7 @@ public class FilterParameterTests extends AbstractStatefulStatelessFilterTest {
 	@SkipForDialect(dialectClass = DerbyDialect.class, reason = "Derby silently converts a boolean to integral types")
 	@SkipForDialect(dialectClass = DB2Dialect.class, reason = "DB2 silently converts a boolean to integral types")
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "MySQL silently converts a boolean to integral types")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore silently converts strings to integral types")
 	@SkipForDialect(dialectClass = MariaDBDialect.class, reason = "MariaDB silently converts a boolean to integral types")
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "TiDB silently converts a boolean to integral types")
 	@SkipForDialect(dialectClass = SQLServerDialect.class, reason = "SQL Server silently converts a boolean to integral types")
@@ -182,6 +185,7 @@ public class FilterParameterTests extends AbstractStatefulStatelessFilterTest {
 	@MethodSource("transactionKind")
 	@SkipForDialect(dialectClass = MySQLDialect.class, reason = "MySQL silently converts strings to integral types")
 	@SkipForDialect(dialectClass = MariaDBDialect.class, reason = "MariaDB silently converts strings to integral types")
+	@SkipForDialect(dialectClass = SingleStoreDialect.class, reason = "SingleStore silently converts strings to integral types")
 	@SkipForDialect(dialectClass = TiDBDialect.class, reason = "TiDB silently converts strings to integral types")
 	@SkipForDialect(dialectClass = PostgresPlusDialect.class, reason = "PostgresPlus silently converts strings to integral types")
 	public void testMismatch(BiConsumer<SessionFactoryScope, Consumer<? extends SharedSessionContract>> inTransaction) {
